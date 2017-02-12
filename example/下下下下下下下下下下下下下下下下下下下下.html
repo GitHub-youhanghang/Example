@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/page.css">
+    <style type="text/css">
+	.red{color:red;font-size: 30px;}
+
+    </style>
+</head>
+<body>
+
+<button id="go"> Run</button>
+<div id="block">Hello!</div>
+
+
+
+
+<!-- js -->
+<script src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+// 在一个动画中同时应用三种类型的效果
+$("#go").click(function(){
+  $("#block").animate({ 
+    width: "90%",
+    height: "100%", 
+    fontSize: "10em", 
+    borderWidth: 10
+  }, 1000 );
+});
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        
+    });
+</script>
+
+</body>
+</html>

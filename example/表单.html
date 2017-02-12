@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/page.css">
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+    <form id="myform" name="myform" method="post" onsubmit="return sumbitTest();" action="RegisterAction.action">
+        <table>
+            <tr>
+                <td>姓名:</td>
+                <td>
+                    <input type="text" name="name" />
+                </td>
+            </tr>
+            <tr>
+                <td>屏蔽所有字符:</td>
+                <td>
+                    <input type="text" name="name1" />
+                </td>
+            </tr>
+            <tr>
+                <td>屏蔽字符，只能输入数字:</td>
+                <td>
+                    <input type="text" name="name2" />
+                </td>
+            </tr>
+            <tr>
+                <td>1. 必填字段</td>
+                <td>
+                    <input type="text" name="name" required>
+                </td>
+            </tr>
+            <tr>
+                <td>姓名:</td>
+                <td>
+                    <input type="text" name="name" />
+                </td>
+            </tr>
+            <tr>
+                <td>性别:</td>
+                <td>
+                    <input type="radio" name="sex" value="1"> 男
+                    <input type="radio" name="sex" value="0"> 女
+                </td>
+            </tr>
+            <tr>
+                <td>爱好:</td>
+                <td>
+                    <input type="checkbox" name="like" value="1"> 电影
+                    <input type="checkbox" name="like" value="0"> 音乐
+                </td>
+            </tr>
+            <tr>
+                <td>年龄:</td>
+                <td>
+                    <select name="age">
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit普通提交">
+                    <input type="button" id="ajaxBtn" value="AJAX提交" />
+                    <input type="button" id="jqueryBtn" value="jQuery提交" />
+                    <input type="button" id="jsBtn" value="JS提交" />
+                    <input type="submit" value="onSubmit提交" />
+                    <button>button提交</button>
+                    <input type="submit" formnovalidate name="btnNoValidate" value="Non-validating Submit">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="reset" value="Reset Form">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <!-- js -->
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/EventUtil.js"></script>
+    <script>
+    /*表单操作*/
+    var myForm = document.getElementById("myform");
+    var myForm_ = document.forms["myform"];
+    console.log(myForm);
+    console.log(myForm_);
+    // myForm.reset();
+
+    var sex = myForm.elements["sex"];
+    console.log(sex);
+    console.log(sex[0]);
+    sex[0].disabled = true;
+
+    // 在文本框获得焦点时选择其所有文本
+    var inputName = myForm['name'];
+    EventUtil.addHandler(inputName, 'focus', function(event) {
+        event = EventUtil.getEvent(event);
+        var target = EventUtil.getTarget(event);
+        target.select();
+    });
+    //取得选择的文本范围
+
+    function selectText(textbox, startIndex, stopIndex) {
+        if (textbox.setSelectionRange) {
+            textbox.setSelectionRange(startIndex, stopIndex);
+        } else if (textbox.createTextRange) {
+            var range = textbox.createTextRange();
+            range.collapse(true);
+            range.moveStart("character", startIndex);
+            range.moveEnd("character", stopIndex - startIndex);
+            range.select();
+        }
+
+        textbox.focus();
+    }
+
+    /*---------------------------- 过滤输入-----------------------------*/
+    var name1 = myForm['name1'];
+    var name2 = myForm['name2'];
+    // 1. 屏蔽字符
+
+
+    EventUtil.addHandler(name1, "keypress", function(event) {
+        event = EventUtil.getEvent(event);
+        EventUtil.preventDefault(event);
+    });
+    //2. 只能输入数字
+    EventUtil.addHandler(name2, "keypress", function(event) {
+        event = EventUtil.getEvent(event);
+        var target = EventUtil.getTarget(event);
+        var charCode = EventUtil.getCharCode(event);
+        if (!/\d/.test(String.fromCharCode(charCode)) && charCode > 9 && !event.ctrlKey) {
+            EventUtil.preventDefault(event);
+        }
+    });
+
+
+
+
+
+
+  /*---------------------------- 表单序列化-----------------------------*/
+    function serialize(form) {
+        var parts = [],
+            field = null,
+            i,
+            len,
+            j,
+            optLen,
+            option,
+            optValue;
+        for (i = 0, len = form.elements.length; i < len; i++) {
+            field = form.elements[i];
+            switch (field.type) {
+                case "select-one":
+                case "select-multiple":
+                    if (field.name.length) {
+                        for (j = 0, optLen = field.options.length; j < optLen; j++) {
+                            option = field.options[j];
+                            if (option.selected) {
+                                optValue = "";
+                                if (option.hasAttribute) {
+                                    optValue = (option.hasAttribute("value") ?
+                                        option.value : option.text);
+                                } else {
+                                    optValue = (option.attributes["value"].specified ?
+                                        option.value : option.text);
+                                }
+                                parts.push(encodeURIComponent(field.name) + "=" +
+                                    encodeURIComponent(optValue));
+                            }
+                        }
+                    }
+                    break;
+                case undefined: //字段集
+                case "file": //文件输入
+                case "submit": //提交按钮
+                case "reset": //重置按钮
+                case "button": //自定义按钮
+                    break;
+                case "radio": //单选按钮
+                case "checkbox": //复选框
+                    if (!field.checked) {
+                        break;
+                    }
+                    /* 执行默认操作 */
+                default:
+                    //不包含没有名字的表单字段
+                    if (field.name.length) {
+                        parts.push(encodeURIComponent(field.name) + "=" +
+                            encodeURIComponent(field.value));
+                    }
+            }
+        }
+        return parts.join("&");
+    }
+    EventUtil.addHandler(myForm, "submit", function(event) {
+    	var formdata=serialize(myForm);
+        alert(formdata);
+
+
+        //避免多次提交表单
+        // event=EventUtil.getEvent(event);
+        // var target=EventUtil.getTarget(event);
+        // var btn=target.elements['submit-btn'];
+        // btn.disabled=true;
+        // 注意，不能通过 onclick 事件处理程序来实现这个功能，原
+        // 因是不同浏览器之间存在“时差”：有的浏览器会在触发表单的 submit 事件之前触发 click 事件，
+        // 而有的浏览器则相反。对于先触发 click 事件的浏览器，意味着会在提交发生之前禁用按钮，结果
+        // 永远都不会提交表单。因此，最好是通过 submit 事件来禁用提交按钮。不过，这种方式不适合表
+        // 单中不包含提交按钮的情况；如前所述，只有在包含提交按钮的情况下，才有可能触发表单的 submit
+        // 事件。	
+
+
+        //阻止表单提交
+        // event=EventUtil.getEvent(event);
+        // EventUtil.preventDefault(event);
+    });
+
+    // 共有的表单字段方法 
+    //获得焦点focus() 失去焦点blur()
+    // EventUtil.addHandler(window, "load", function(event){
+    // document.forms[0].elements[0].focus();
+    // });	
+
+    // 对于<input>和<textarea>
+    //元素，当它们从获得焦点到失去焦点且 value 值改变时，
+    // 才会触发 change 事件。对于<select>元素，只要用户选择了不同的选项，就会触发 change 事件；
+    // 换句话说，不失去焦点也会触发 change 事件。
+    </script>
+    <script type="text/javascript">
+    // $(function() {
+    // 	//ajax提交
+    // 	$("#ajaxBtn").click(function() {
+    // 		var params = $("#myform").serialize();
+    // 		$.ajax( {
+    // 			type : "POST",
+    // 			url : "RegisterAction.action",
+    // 			data : params,
+    // 			success : function(msg) {
+    // 				alert("success: " + msg);
+    // 			}
+    // 		});
+    // 	})
+
+    // 	//jQuery提交
+    // 	$("#jqueryBtn").click(function(){
+    // 		$("#myform").submit();
+    // 	})
+
+    // 	//js提交 
+    // 	$("#jsBtn").click(function(){
+    // 		document.myform.action="RegisterAction.action";   
+    // 	    document.myform.submit();   
+    // 	})
+    // })
+    // function sumbitTest(){
+    // 	return true; //return false则不会提交 
+    // }
+    </script>
+</body>
+
+</html>

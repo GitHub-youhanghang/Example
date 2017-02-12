@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>CSS3过渡效果</title>
+    <style>
+    .left-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: red;
+        transition: width 2s;
+        -webkit-transition: width 2s;
+        /* Safari */
+    }
+    
+    #open {
+        margin-left: 1000px;
+        width: 100px;
+        height: 50px;
+    }
+    
+    .left-box-con {
+        margin: 20px;
+        width: 200px;
+        height: 700px;
+        background: #CCC;
+        display: none;
+    }
+       .annimal-leftBoxCon {
+        animation: leftBoxCon 1s;
+        -webkit-animation: leftBoxCon 1s;
+        /* Safari 与 Chrome */
+    }
+       @keyframes leftBoxCon {
+        0% {
+            transform: translate(-400px, 0);
+            -ms-transform: translate(-400px, 0);
+            /* IE 9 */
+            -webkit-transform: translate(-400px, 0);
+            /* Safari and Chrome */
+        }
+        100% {
+            transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            /* IE 9 */
+            -webkit-transform: translate(0, 0);
+            /* Safari and Chrome */
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="left-box">
+        <div class="left-box-con annimal-leftBoxCon">
+        </div>
+    </div>
+    <button id="open">展开</button>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#open').click(function(event) {
+            $('.left-box').css('width', '400px');
+            setTimeout(function() {
+                //处理中
+                $('.left-box-con').show()
+            }, 1000);
+    event.stopPropagation();  
+        });
+        $(document).click(function(){
+            $('.left-box-con').hide();
+            $('.left-box').css('width', '0');
+
+        })
+     
+    });
+    </script>
+</body>
+
+</html>

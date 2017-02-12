@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/page.css">
+    <style type="text/css">
+	.red{color:red;font-size: 30px;}
+
+    </style>
+</head>
+<body>
+
+
+
+
+
+
+<!-- js -->
+<script src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+// 为了避免 setInterval()的重复定时器的这 2个缺点，你可以用如下模式使用链式 setTimeout()
+// 调用。
+var i=0;
+function add(){
+	console.log(i++);
+}
+setTimeout(function(){
+//处理中
+add()
+setTimeout(arguments.callee, 1000);
+}, 200);
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        
+    });
+</script>
+
+</body>
+</html>
