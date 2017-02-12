@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="css/page.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <style type="text/css">
-	.red{color:red;font-size: 30px;}
 
     </style>
 </head>
@@ -21,7 +18,22 @@
 <!-- js -->
 <script src="js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
-
+	var obj=new Object();
+		obj.name='name';
+	Object.prototype.hide = function(){ 
+ 			alert('');
+ 			return this; 
+} 
+	var arr=new Array();
+	console.log(obj.constructor);
+	console.log(obj.hasOwnProperty('name'));
+	console.log(obj.propertyIsEnumerable('name'));
+	console.log(obj.toLocaleString());
+	console.log(obj.toString());
+	console.log(obj.valueOf());
+	console.log(obj.hide);
+	console.log(arr.Propotype.constructor);
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         
