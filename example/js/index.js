@@ -21,22 +21,27 @@ function insertAfter(newElement, targetElement) {
     }
 }
 
-function hasClass(obj, cls) { // 判断obj是否有此class
+
+  // 判断obj是否有此class
+  function hasClass(obj,cls){  //class位于单词边界
     return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
-}
+   }
 
-function addClass(obj, cls) { //给 obj添加class
-    if (!this.hasClass(obj, cls)) {
-        obj.className += " " + cls;
+      //给 obj添加class
+  function addClass(obj,cls){ 
+    if(!this.hasClass(obj,cls)){ 
+       obj.className += cls;
     }
-}
+  }
+  //移除obj对应的class
+  function removeClass(obj,cls){ 
+    if(hasClass(obj,cls)){ 
+      var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+         obj.className = obj.className.replace(reg,'');
+    }
+  }
 
-function removeClass(obj, cls) { //移除obj对应的class
-    if (hasClass(obj, cls)) {
-        var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-        obj.className = obj.className.replace(reg, " ");
-    }
-}
+
 
 //获取元素的兄弟节点
 function siblings(o) { //参数o就是想取谁的兄弟节点，就把那个元素传进去
@@ -63,7 +68,7 @@ function siblings(o) { //参数o就是想取谁的兄弟节点，就把那个元
 
 
 function getClassName(ParentId, NewClassName) {
-    var AllClassElem = ParentId.getElementsByTagName(“ * ”);
+    var AllClassElem = ParentId.getElementsByTagName("*");
     var AllClass = [];
     var i = 0;
     for (var i = 0; i < AllClassElem.length; i++) {
@@ -84,30 +89,43 @@ function getClassName(ParentId, NewClassName) {
  * @param {String} classname 指定类名 
  * @return {[Object]}目标对象集合
  */
-function getElementsByClassName(node, classname) {
-    //如果浏览器支持则直接使用
-    if (node.getElementsByClassName) {
-        return node.getElementsByClassName(classname);
-    } else {
-        return (function getElementsByClass(searchClass, node) {
-            if (node == null)
-                node = document;
-            var classElements = [],
-                els = node.getElementsByTagName("*"),
-                elsLen = els.length,
-                pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)"),
-                i, j;
 
-            for (i = 0, j = 0; i < elsLen; i++) {
-                if (pattern.test(els[i].className)) {
-                    classElements[j] = els[i];
-                    j++;
-                }
-            }
-            return classElements;
-        })(classname, node);
+   function getElementsByClassName(className){ 
+    var classArr = [];
+    var tags = document.getElementsByTagName('*');
+    for(var item in tags){ 
+      if(tags[item].nodeType == 1){ 
+        if(tags[item].getAttribute('class') == className){ 
+          classArr.push(tags[item]);
+        }
+      }
     }
-}
+    return classArr; //返回
+  }
+// function getElementsByClassName(node, classname) {
+//     //如果浏览器支持则直接使用
+//     if (node.getElementsByClassName) {
+//         return node.getElementsByClassName(classname);
+//     } else {
+//         return (function getElementsByClassName(searchClass, node) {
+//             if (node == null)
+//                 node = document;
+//             var classElements = [],
+//                 els = node.getElementsByTagName("*"),
+//                 elsLen = els.length,
+//                 pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)"),
+//                 i, j;
+
+//             for (i = 0, j = 0; i < elsLen; i++) {
+//                 if (pattern.test(els[i].className)) {
+//                     classElements[j] = els[i];
+//                     j++;
+//                 }
+//             }
+//             return classElements;
+//         })(classname, node);
+//     }
+// }
 
 /**
  * 获取下一个元素结点
@@ -194,6 +212,70 @@ function getBoundingClientRect(element) {
         }
     }
 }
+//原生js实现jquery函数animate()动画效果的简单实例
+function animate(obj, json, interval, sp, fn) {
+  clearInterval(obj.timer);
+  //var k = 0;
+  //var j = 0;
+  function getStyle(obj, arr) {
+    if(obj.currentStyle){
+      return obj.currentStyle[arr];  //针对ie
+    } else {
+      return document.defaultView.getComputedStyle(obj, null)[arr]; 
+    }
+  }
+  obj.timer = setInterval(function(){
+    //j ++;
+    var flag = true;
+    for(var arr in json) {
+      var icur = 0;
+      //k++;
+      if(arr == "opacity") {
+        icur = Math.round(parseFloat(getStyle(obj, arr))*100);
+      } else {
+        icur = parseInt(getStyle(obj, arr));
+      }
+      var speed = (json[arr] - icur) * sp;
+      speed = speed > 0 ? Math.ceil(speed): Math.floor(speed);
+      if(icur != json[arr]){
+        flag = false;
+      } 
+      if(arr == "opacity"){
+        obj.style.filter = "alpha(opacity : '+(icur + speed)+' )";
+        obj.style.opacity = (icur + speed)/100;
+      }else {
+        obj.style[arr] = icur + speed + "px";
+      }
+      //console.log(j + "," + arr +":"+ flag);
+    }
+
+    if(flag){
+      clearInterval(obj.timer);
+      //console.log(j + ":" + flag); 
+      //console.log("k = " + k);
+      //console.log("j = " + j);
+      //console.log("DONE");
+      if(fn){
+        fn();
+      }
+    }
+  },interval);
+}
+
+// 调用方式：
+// <script>
+//   var move = document.getElementById("move").getElementsByTagName("li");
+//   for(var i = 0; i < move.length; i ++){
+//     move[i].onmouseover = function(){
+//       var _this = this;
+//       animate(_this, {width: 500, height: 200},10, 0.01, function(){
+//         animate(_this, {width: 300, height: 200},10, 0.01);
+//       });
+
+//     }
+//   }
+
+// </script>
 //   不错的JS验证~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 用途：校验ip地址的格式 
 // 输入：strIP：ip地址 
