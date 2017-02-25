@@ -44,6 +44,7 @@
         height: 200px;
         z-index: 10;
         overflow: hidden;
+        left: 0;
     }
     
     .imgList li {
@@ -262,10 +263,10 @@
     function changeTo(num) {
         //设置image
         var imgList = getElementsByClassName("imgList")[0];
-        // animate(imgList, {
-        //     left:-num * 400
-        // },0, 0.01); //左移一定距离
-        goLeft(imgList,num*400);
+        animate(imgList, {
+            left:-num * 400
+        },0, 0.01); //左移一定距离
+        // goLeft(imgList,num*400);
         //设置image 的 info
         var curInfo = getElementsByClassName("infoOn")[0];
         removeClass(curInfo, "infoOn");
@@ -280,29 +281,29 @@
 
 
     // 图片组相对原始左移dist px距离  这个方法对ie兼容
-    function goLeft(elem,dist){ 
-      if(dist == 400){ //第一次时设置left为0px 或者直接使用内嵌法 style="left:0;"
-        elem.style.left = "0px";
-      }
-      var toLeft; //判断图片移动方向是否为左
-      dist = dist + parseInt(elem.style.left); //图片组相对当前移动距离
-      if(dist<0){  
-        toLeft = false;
-        dist = Math.abs(dist);
-      }else{ 
-        toLeft = true;
-      }
-      for(var i=0;i<= dist/20;i++){ //这里设定缓慢移动，10阶每阶40px
-        (function(_i){ 
-          var pos = parseInt(elem.style.left); //获取当前left
-          setTimeout(function(){ 
-            pos += (toLeft)? -(_i * 20) : (_i * 20); //根据toLeft值指定图片组位置改变
-            //console.log(pos);
-            elem.style.left = pos + "px";
-          },_i * 25); //每阶间隔50毫秒
-        })(i);
-      }
-    }
+    // function goLeft(elem,dist){ 
+    //   if(dist == 400){ //第一次时设置left为0px 或者直接使用内嵌法 style="left:0;"
+    //     elem.style.left = "0px";
+    //   }
+    //   var toLeft; //判断图片移动方向是否为左
+    //   dist = dist + parseInt(elem.style.left); //图片组相对当前移动距离
+    //   if(dist<0){  
+    //     toLeft = false;
+    //     dist = Math.abs(dist);
+    //   }else{ 
+    //     toLeft = true;
+    //   }
+    //   for(var i=0;i<= dist/20;i++){ //这里设定缓慢移动，10阶每阶40px
+    //     (function(_i){ 
+    //       var pos = parseInt(elem.style.left); //获取当前left
+    //       setTimeout(function(){ 
+    //         pos += (toLeft)? -(_i * 20) : (_i * 20); //根据toLeft值指定图片组位置改变
+    //         //console.log(pos);
+    //         elem.style.left = pos + "px";
+    //       },_i * 25); //每阶间隔50毫秒
+    //     })(i);
+    //   }
+    // }
     // 当前进度 annimale 方法不能支持ie,goleft能,循环播放1变5 的时候能够左移一个就能达到
     </script>
 </body>

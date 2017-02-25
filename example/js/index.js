@@ -212,7 +212,8 @@ function getBoundingClientRect(element) {
         }
     }
 }
-//原生js实现jquery函数animate()动画效果的简单实例
+//原生js实现jquery函数animate()动画效果的简单实例   
+//注意，在ie下运行的时候，例如想让宽度有动画效果，如果css没有指定宽度，那么该方法运行不了，谷歌可以
 function animate(obj, json, interval, sp, fn) {
   clearInterval(obj.timer);
   //var k = 0;
@@ -274,6 +275,58 @@ function animate(obj, json, interval, sp, fn) {
 
 //     }
 //   }
+
+
+
+
+
+
+
+
+// function animate(obj,json,fn){
+//         function getStyle(obj,attr){
+//         if(obj.currentStyle){
+//             return obj.currentStyle[attr];
+//         }else
+//         {
+//             return getComputedStyle(obj,false)[attr];
+//         }
+
+//         }
+
+//         var flag=true;
+//         clearInterval(obj.timer);
+//         obj.timer=setInterval(function(){
+//             for(var attr in json){
+//                 var icur=0;
+//                 if(attr=='opacity'){
+//                     icur=Math.round(parseFloat(getStyle(obj,attr))*100);
+//                 }else{
+//                     icur=parseInt(getStyle(obj,attr));
+//                 }
+//                 var speed=(json[attr]-icur)/8;
+//                 speed=speed<0?Math.floor(speed):Math.ceil(speed);
+//                 if(icur!=json[attr]){
+//                     flag=false;
+//                 }else if(icur==json[attr]){
+//                     flag=true;
+//                     //这里是必须要判断的，这样，第一个值达到目标，flag被改为了true，
+//                     //for循环第二个值时，如果未达标，依然会再次把flag设为flase.
+//                 }
+//                 if(attr=='opacity'){
+//                     obj.style[attr]=(icur+speed)/100;
+//                 }else{
+//                     obj.style[attr]=icur+speed+'px';
+//                 }
+//                 if(flag){
+//                     clearInterval(obj.timer);
+//                 if(fn){
+//                     fn();
+//                 }
+//             }
+//         }
+//     },20)
+//     }
 
 // </script>
 //   不错的JS验证~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

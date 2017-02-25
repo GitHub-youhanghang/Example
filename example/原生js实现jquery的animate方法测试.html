@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/page.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style type="text/css">
+	.red{color:red;font-size: 30px;}
+/*     如果不给宽度高度，在ie下用当前animate方法使宽度高度发生变化不好使，虽然谷歌可以，给了宽高才能设置宽高的动画效果
+ */	#p{background: #CCC;width: 100%;height: 20px;}
+
+    </style>
+</head>
+<body>
+
+<p id="p">ddddddddddddddddddddddddddddddddd</p>
+
+  
+
+
+<!-- js -->
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+    // $('#p').animate({
+    //     width: 200,
+    //     height: 200},
+    //     1000, function() {
+    //     /* stuff to do after animation is complete */
+    // });
+</script>
+<script type="text/javascript" src="js/EventUtil.js"></script>
+
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+	var p = document.getElementById('p');
+
+    //注意，在ie下运行的时候，例如想让宽度有动画效果，如果css没有指定宽度，那么该方法运行不了，谷歌可以
+	animate(p, {width: 500, height: 200},10,.1,function(){
+      
+      });
+
+</script>
+
+
+</body>
+</html>
