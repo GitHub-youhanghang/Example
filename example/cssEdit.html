@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/page.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+    .red {
+        color: red;
+        font-size: 30px;
+    }
+
+    </style>
+</head>
+
+<body>
+
+<div id="styleDiv" class="style">
+	<style type="text/css" style="display: none;">
+	.style  { position: fixed;width:600px;height: 300px;top:600px;left:0;}
+    .style style{display: block;height: 200px;background-color: #1D1F20;color: #DDCA7E;font-size: 14px;}
+    .style style{white-space:pre-wrap;word-wrap: break-word;overflow-y:auto;}
+    #styleClose{width: 50px;height: 30px;font-size: 16px;}
+    .style-control{position: absolute;right:20px;top:0;}
+	</style>
+	<div class="style-control" >
+		<button id="styleClose">关闭</button>
+		<button id="styleClose">拖动</button>
+	</div>
+
+	<div id="styleCon">
+	    <style   type="text/css" contentEditable>
+			/* css */
+	    </style>		
+	</div>
+	<script type="text/javascript">
+		var styleClose=document.getElementById('styleClose');
+		var styleCon=document.getElementById('styleCon');
+		var styleDiv=document.getElementById('styleDiv');
+		var styleCloseFlag=true;
+			styleClose.onclick=function(){
+				if (styleCloseFlag) {
+					styleCon.style.display="none";
+					styleDiv.style.zIndex=-111;
+					this.innerHTML="打开";
+					styleCloseFlag=false;
+				}else{
+					styleCon.style.display="block";
+					styleDiv.style.Zindex=9999;
+					this.innerHTML="关闭";
+					styleCloseFlag=true;
+				}
+				
+			}
+//防止页面刷新 禁用 F5 ctr+r ctr+f5
+// document.onkeydown = function()
+// {
+// 	event = window.event || event; 
+//          if(event.keyCode==116|| (event.ctrlKey && event.keyCode==82)||(event.ctrlKey && event.keyCode==116)) {
+//          event.keyCode=0;
+//          event.returnValue = false;
+//          }
+// }
+
+
+	
+	</script>
+
+ </div>   
+    <h1 class="h1">标题</h1>
+    <p class="tuozhuai" >禁止页面刷新</p>
+    
+    	
+
+    <!-- js -->
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+    </script>
+    <script type="text/javascript" src="js/EventUtil.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+    </script>
+</body>
+
+</html>
