@@ -4,87 +4,144 @@
 <head>
     <meta charset="UTF-8">
     <title>Tab切换-自动</title>
-    <link type="text/css" rel="stylesheet" href="css/tab_qiehuan2.css">
-<!--     <script type="text/javascript" src="js/tab_qiehuan.js"></script>
- --></head>
+<!--     <link type="text/css" rel="stylesheet" href="../css/tab_qiehuan.css">
+ -->
+
+ <style type="text/css">
+
+.tab-box-con .mod{display: none}
+ </style>
+ </head>
 
 <body>
-	<div class="notice">
-		<div class="tit">
-			<ul class="tit-ul" id="tit-ul">
-				<li class="select">公告</li>
-				<li>规则</li>
-				<li>论坛</li>
-				<li>安全</li>
-				<li>公益</li>
-			</ul>
-		</div>
-		<div class="con" id="con">
-			<div class="mod">
-				<ul class="con-ul">
-					<li><a href="#">一一一一</a></li>
-					<li><a href="#">二二二二</a></li>
-					<li><a href="#">三三三三</a></li>
-					<li><a href="#">四四四四</a></li>
-				</ul>
-			</div>
-			<div class="mod">
-				<ul class="con-ul">
-					<li><a href="#">1111</a></li>
-					<li><a href="#">2222</a></li>
-					<li><a href="#">3333</a></li>
-					<li><a href="#">4444</a></li>
-				</ul>
-			</div>
-			<div class="mod"></div>
-			<div class="mod"></div>
-			<div class="mod"></div>
-			<div class="mod"></div>
-		</div>
-	</div>
+    <div class="tab-box">
+        <div class="tab-box-tit">
+            <ul>
+                <li class="select">
+                    <a href="#">公告</a>
+                </li>
+                <li>
+                    <a href="#">规则</a>
+                </li>
+                <li>
+                    <a href="#">论坛</a>
+                </li>
+                <li>
+                    <a href="#">安全</a>
+                </li>
+                <li>
+                    <a href="#">公益</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-box-con">
+            <div class="mod" style="display: block">
+                1
+            </div>
+            <div class="mod">
+                2
+            </div>
+            <div class="mod">
+                3
+            </div>
+            <div class="mod">
+                4
+            </div>
+            <div class="mod">
+                5
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        function tabBox(tabBoxTit,tabBoxCon) {
+
+            // 获取所有的页签和要切换的内容
+            var lis = $('.'+tabBoxTit).find('li');
+            var divs = $('.'+tabBoxCon).find('.mod');
+
+            lis.each(function() {
+                $(this).on('click', function() {
+                    var index = $(this).index();
+                    changeTab(index);
+                });
+
+            });
+
+            function changeTab(curIndex) {
+                lis.each(function(index, el) {
+                    $(this).attr('class', '');
+
+                });
+                divs.each(function(index, el) {
+                    $(this).hide();
+
+                });
+                // 高亮显示当前页签
+                lis.eq(curIndex).addClass('tab-select');
+                divs.eq(curIndex).show();
+
+            }
+        }
+
+        tabBox('tab-box-tit','tab-box-con');
+    });
+    </script>
+    <script type="text/javascript">
+    // function $(id){
+    //     return typeof id==='string'?document.getElementById(id):id;
+    // }
+
+    // window.onload=tab;
+
+    // function tab(){
+    //   // 当前高亮显示的页签的索引
+    //   var index=0;
+    //   var timer=null;
+
+    //   // 获取所有的页签和要切换的内容
+    //   var lis=$('notice-tit').getElementsByTagName('li');
+    //   var divs=$('notice-con').getElementsByTagName('div');
+    //   // 遍历每一个页签且给他们绑定事件
+    //   for(var i=0;i<lis.length;i++){
+    //     lis[i].id=i;
+    //     lis[i].onmouseover=function(){
+    //       clearInterval(timer);
+    //       changeOption(this.id);
+    //     }
+    //     lis[i].onmouseout=function(){  
+    //       timer=setInterval(autoPlay,2000);    
+    //     }
+    //   }
+
+    //   if(timer){
+    //     clearInterval(timer);
+    //     timer=null;
+    //   } 
+    //   // 添加定时器，改变当前高亮的索引
+    //   timer=setInterval(autoPlay,2000);
+
+    //   function autoPlay(){
+    //       index++;
+    //       if(index>=lis.length){
+    //          index=0;
+    //       }
+    //       changeOption(index);
+    //   }
+
+    //   function changeOption(curIndex){
+    //     for(var j=0;j<lis.length;j++){
+    //        lis[j].className='';
+    //        divs[j].style.display='none';
+    //     }
+    //     // 高亮显示当前页签
+    //     lis[curIndex].className='select';
+    //     divs[curIndex].style.display='block';
+    //     index=curIndex;
+    //   }
+    // }
+    </script>
 </body>
-<script src="js/jquery-1.9.1.min.js"></script>
-<script >
-	$(document).ready(function() {
 
-		function tab(){
-			//当前高亮显示的页签的索引
-			var index=0;
-			var timer=null;
-
-			//获取所有的页面的标签和要切换的内容
-			var lis=$('#tit-ul li');
-			var divs=$('#con div.mod');
-			lis.mouseover(function(event) {
-				clearInterval(timer);
-				var index = $(this).index();
-				changeOption(index);
-			}).mouseout(function(event) {
-				timer = setInterval(autoPlay,2000);
-			});
-			if(timer){
-				clearInterval(timer);
-				timer = null;
-			}
-			//添加定时器，改变当前高亮的索引
-			timer = setInterval(autoPlay,2000);
-			function autoPlay(){
-				index++;
-				if (index>=lis.length){
-					index = 0;
-				}
-				changeOption(index);
-			}
-			function changeOption(curIndex){
-				$('#tit-ul li').removeClass('select');
-				$('#tit-ul li').eq(curIndex).addClass('select');
-				$('#con div.mod').hide();
-				$('#con div.mod').eq(curIndex).show();
-				index = curIndex;
-			}
-		}
-		tab();
-	});
-
-</script>
 </html>

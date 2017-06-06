@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/page.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+<a href="http://blog.csdn.net/yangzhpro/article/details/676151
+">这是mailto相关文章</a>
+
+    <form>
+        <input id="name" type="text">
+        <input id="phone" type="text">
+        <textarea id="content">
+            
+        </textarea>
+        <a id="submit" >给我发邮件</a> 
+    </form>
+
+
+    <!-- js -->
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#submit').on('click',function(){
+            var name=$('#name').val();
+            var phone=$('#phone').val();
+            var content=$('#content').val();
+
+            var href="mailto: 2354339265@qq.com?body="+content;
+            $(this).attr("href",href);
+        })
+        
+    });
+    </script>
+</body>
+
+</html>

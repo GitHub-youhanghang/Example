@@ -10,24 +10,29 @@
     <script type="text/javascript" src="js/EventUtil.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <style type="text/css">
-    #div{height: 100px;background: red;margin-top:1000px;margin-bottom: 1500px;}
+    #div {
+        height: 100px;
+        background: red;
+        margin-top: 1000px;
+        margin-bottom: 1500px;
+    }
     </style>
 </head>
 
 <body style="padding-top: 10px;">
-    
-    <div  id="div"></div>
-    <p>dddddddd</p>
     <!-- js -->
     <script type="text/javascript">
-    function mScroll(id) {
-        $("html,body").stop(true);
-        $("html,body").animate({
-            scrollTop: $("#" + id).offset().top-300
-        }, 1000);
-    }
-    mScroll('div')
-    // alert($("div").offset().top)
+    var a=null;
+    alert(a)
+
+    // var factorial = function (num) {
+    //     if (num <= 1) {
+    //         return 1;
+    //     } else {
+    //         return num * f(num - 1);
+    //     }
+    // };
+    // alert(factorial)
     </script>
 </body>
 
